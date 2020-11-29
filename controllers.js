@@ -1,4 +1,5 @@
 // @ts-check
+import { Settings } from "./settings.js";
 import { BallSuperPang, ParticleView, PlayerCharacter, PlayerCharacterView, Shot, ShotView } from "./classes.js";
 
 /**
@@ -25,7 +26,7 @@ class BallController {
      */
     move() {
         let borders = this.view.svgContainer.getBoundingClientRect();
-        this.model.gravity();
+        this.model.gravity(Settings.GRAVITY);
         this.model.move(borders.width, borders.height);
         this.view.updatePosition(this.model.position);
     }
@@ -66,13 +67,15 @@ class PlayerCharacterController {
     /**
      * Create controller for a Player Character and its View
      * @param {Array<Number>} position Position [x, y]
-     * @param {String} color Hex string representing color
+     * @param {String} image String to image of player character
      * @param {String} id ID to identify the player character
+     * @param {Number} width Character width
+     * @param {Number} height Character height
      * @param {SVGElement} svgContainer Svg element to draw on
      */
-    constructor(position, color, id, svgContainer) {
-        this.model = new PlayerCharacter(position, id);
-        this.view = new PlayerCharacterView(position, this.model.width, this.model.height, color, id, svgContainer);
+    constructor(position, image, id, width, height, svgContainer) {
+        this.model = new PlayerCharacter(position, id, width, height);
+        this.view = new PlayerCharacterView(position, width, height, image, id, svgContainer);
         this.view.firstDraw();
     }
 
@@ -161,12 +164,15 @@ class ShotController {
     /**
      * Create controller for a Super Pang Ball and its View
      * @param {Array<Number>} position Position [x, y]
+     * @param {Number} speed Shot speed
+     * @param {Number} width Shot width
      * @param {Number} id ID to identify the shot
+     * @param {String} color Hex string representing color
      * @param {SVGElement} svgContainer Svg element to draw on
      */
-    constructor(position, id, svgContainer) {
-        this.model = new Shot(position, id);
-        this.view = new ShotView(position, this.model.width, this.model.height, id, svgContainer);
+    constructor(position, speed, width, id, color, svgContainer) {
+        this.model = new Shot(position, speed, width, id);
+        this.view = new ShotView(position, width, this.model.height, id, color, svgContainer);
         this.view.firstDraw();
     }
 

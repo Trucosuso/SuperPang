@@ -57,10 +57,10 @@ class Particle {
 
     /**
      * Changes the velocity of the particle according to a vertical uniform gravitational field
-     * g = 9.8. As in the surface of the Earth in m²/s²
+     * g. By default 9.8 as in the surface of the Earth in m²/s²
+     * @param {Number} g Gravity to apply to the particle
      */
-    gravity() {
-        let g = 9.8;
+    gravity(g = 9.8) {
         this.previousVelocity[1] = this.velocity[1];
         this.velocity[1] += g;
     }
@@ -215,18 +215,6 @@ class BallSuperPang extends Particle {
 
     // Methods
     /**
-     * HAS TO BE FIXED. NOT WORKING PROPERLY
-     * Changes the velocity of the particle according to a vertical uniform gravitational field
-     * g = 9.8/32. Because it is the most appropriate to show the animation. This should be changed later.
-     * @override
-     */
-    gravity() {
-        let g = 9.8 * 0.008;
-        this.previousVelocity[1] = this.velocity[1];
-        this.velocity[1] += g;
-    }
-
-    /**
      * Breaks the ball. Creates two new smaller ball if it was big enough.
      * You should delete this object after doing this. This method does not remove it.
      * If the balls where created the method returns the two new balls in an array.
@@ -252,12 +240,15 @@ class PlayerCharacter {
      * Create a player character for Super Pang
      * @param {Array<Number>} position Character position
      * @param {String} id ID to identify the player character
+     * @param {Number} width Character width
+     * @param {Number} height Character height
+     * 
      */
-    constructor(position, id) {
+    constructor(position, id, width, height) {
         this.position = position;
         this.id = id;
-        this.width = 103;
-        this.height = 80;
+        this.width = width;
+        this.height = height;
     }
 
     /**
@@ -332,15 +323,15 @@ class PlayerCharacterView {
      * @param {Array<Number>} position Character position
      * @param {Number} width Character width
      * @param {Number} height Character height
-     * @param {String} color Hex string representing color
+     * @param {String} image String to image of player character
      * @param {String} id ID to assing to the HTML element
      * @param {SVGElement} svgContainer Svg element to draw on
      */
-    constructor(position, width, height, color, id, svgContainer) {
+    constructor(position, width, height, image, id, svgContainer) {
         this.position = position;
         this.width = width;
         this.height = height;
-        this.color = color;
+        this.image = image;
         this.id = id;
         this.svgContainer = svgContainer;
         this.figure = null;
@@ -355,7 +346,7 @@ class PlayerCharacterView {
         this.figure.setAttribute("y", this.position[1].toString());
         this.figure.setAttribute("width", this.width.toString());
         this.figure.setAttribute("height", this.height.toString());
-        this.figure.setAttribute("href", "images/steady.png");
+        this.figure.setAttribute("href", this.image);
         this.figure.id = this.id.toString();
         this.svgContainer.appendChild(this.figure);
     }
@@ -395,13 +386,15 @@ class Shot {
     /**
      * Create a shot
      * @param {Array<Number>} position Shot initial position
+     * @param {Number} speed Shot speed
+     * @param {Number} width Shot width
      * @param {Number} id ID to identify the shot
      */
-    constructor(position, id) {
+    constructor(position, speed, width, id) {
         this.position = position;
-        this.width = 3;
+        this.width = width;
         this.height = 0;
-        this.speed = 1;
+        this.speed = speed;
         this.id = id;
     }
 
@@ -412,8 +405,8 @@ class Shot {
      */
     propagateOrRemove() {
         if (this.position[1] > 0) {
-            this.height += 5;
-            this.position[1] -= 5;
+            this.height += this.speed;
+            this.position[1] -= this.speed;
             return false;
         } else {
             return true;
@@ -461,14 +454,15 @@ class ShotView {
      * @param {Number} width Shot width
      * @param {Number} height Shot height
      * @param {Number} id ID to assing to the HTML element
+     * @param {String} color Hex string representing color
      * @param {SVGElement} svgContainer Svg element to draw on
      */
-    constructor(position, width, height, id, svgContainer) {
+    constructor(position, width, height, id, color, svgContainer) {
         this.position = position;
         this.id = id;
         this.width = width;
         this.height = height;
-        this.color = "#0ccce1";
+        this.color = color;
         this.svgContainer = svgContainer;
         this.figure = null;
     }

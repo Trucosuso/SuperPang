@@ -1,4 +1,5 @@
 // @ts-check
+import { Settings } from "./settings.js";
 import { BallController, PlayerCharacterController, ShotController } from "./controllers.js";
 
 /**
@@ -12,19 +13,21 @@ class SuperPang {
     constructor(element) {
         // Create SVG
         this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg.setAttribute("width", "1000");
-        this.svg.setAttribute("height", "600");
+        this.svg.setAttribute("width", Settings.GAME_WIDTH.toString());
+        this.svg.setAttribute("height", Settings.GAME_HEIGHT.toString());
         element.appendChild(this.svg);
+
         // Create Frame in SVG
         this.frame = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        this.frame.setAttribute("width", "1000");
-        this.frame.setAttribute("height", "600");
+        this.frame.setAttribute("width", Settings.GAME_WIDTH.toString());
+        this.frame.setAttribute("height", Settings.GAME_HEIGHT.toString());
         this.frame.setAttribute("fill-opacity", "0");
         this.frame.setAttribute("stroke", "black");
         this.svg.appendChild(this.frame);
+        
 
         /** @type {PlayerCharacterController} Store the player */
-        this.playerCharacter = new PlayerCharacterController([50, 600 - 80], "#000000", "jugador", this.svg);
+        this.playerCharacter = new PlayerCharacterController([50, Settings.GAME_HEIGHT - Settings.PLAYER_HEIGHT], "images/steady.png", "jugador", Settings.PLAYER_WIDTH, Settings.PLAYER_HEIGHT, this.svg);
 
         /** @type {Number} next ID to insert */
         this.nextID = 0;
@@ -65,10 +68,10 @@ class SuperPang {
 
             // Move character if needed
             if (this.moveLeft) {
-                this.playerCharacter.moveLeft(4);
+                this.playerCharacter.moveLeft(Settings.PLAYER_STEP);
             }
             if (this.moveRight) {
-                this.playerCharacter.moveRight(4);
+                this.playerCharacter.moveRight(Settings.PLAYER_STEP);
             }
 
             // Propagate shots if there are any
@@ -120,8 +123,8 @@ class SuperPang {
                 this.moveLeft = true;
             }
             if (e.key == " ") {
-                if (this.shots.length < 4) {
-                    this.shots.push(new ShotController([this.playerCharacter.position[0] + this.playerCharacter.width / 2, this.playerCharacter.position[1] + this.playerCharacter.height], this.nextID++, this.svg));
+                if (this.shots.length < Settings.MAX_SHOTS) {
+                    this.shots.push(new ShotController([this.playerCharacter.position[0] + this.playerCharacter.width / 2, this.playerCharacter.position[1] + this.playerCharacter.height], Settings.SHOT_SPEED, Settings.SHOT_WIDTH, this.nextID++, Settings.SHOT_COLOR, this.svg));
                     this.playerCharacter.updateImage("images/shooting.png");
                 }
             }
@@ -149,7 +152,7 @@ class SuperPang {
     createBalls(quantity) {
         let balls = [];
         for (let i = 0; i < quantity; i++) {
-            balls.push(new BallController([numAleatorio(100, 400), numAleatorio(100, 300)], [numAleatorioPositivoONegativo(5), -numAleatorio(1, 2.5)], numAleatorioEntero(1, 4), this.nextID++, "red", this.svg));
+            balls.push(new BallController([numAleatorio(200, 800), numAleatorio(50, 300)], [numAleatorioPositivoONegativo(5), -numAleatorio(1, 2.5)], numAleatorioEntero(1, 4), this.nextID++, Settings.BALL_COLOR, this.svg));
         }
         return balls;
     }
