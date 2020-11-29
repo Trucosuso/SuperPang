@@ -325,7 +325,7 @@ class PlayerCharacterView {
         this.figure.setAttribute("y", this.position[1].toString());
         this.figure.setAttribute("width", this.width.toString());
         this.figure.setAttribute("height", this.height.toString());
-        this.figure.setAttribute("href", "images/steadyCropped.png");
+        this.figure.setAttribute("href", "images/steady.png");
         this.figure.id = this.id.toString();
         this.svgContainer.appendChild(this.figure);
     }

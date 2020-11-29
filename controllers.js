@@ -113,7 +113,7 @@ class PlayerCharacterController {
         let containerWidth = this.view.svgContainer.getBoundingClientRect().width;
         this.model.moveRight(containerWidth, step);
         this.view.updatePosition(this.model.position);
-        this.updateImage("images/moveRightCropped.png");
+        this.updateImage("images/moveRight.png");
     }
 
     /**
@@ -124,7 +124,7 @@ class PlayerCharacterController {
         let containerWidth = this.view.svgContainer.getBoundingClientRect().width;
         this.model.moveLeft(containerWidth, step);
         this.view.updatePosition(this.model.position);
-        this.updateImage("images/moveLeftCropped.png");
+        this.updateImage("images/moveLeft.png");
     }
 
     /**

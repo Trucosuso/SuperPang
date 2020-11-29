@@ -105,21 +105,21 @@ class SuperPang {
             if (e.key == " ") {
                 if (this.shots.length < 4) {
                     this.shots.push(new ShotController([this.playerCharacter.position[0] + this.playerCharacter.width / 2, this.playerCharacter.position[1] + this.playerCharacter.height], this.nextID++, this.svg));
-                    this.playerCharacter.updateImage("images/shootingCropped.png");
+                    this.playerCharacter.updateImage("images/shooting.png");
                 }
             }
         });
         window.addEventListener("keyup", (e) => {
             if (e.key == "ArrowRight") {
                 this.moveRight = false;
-                this.playerCharacter.updateImage("images/steadyCropped.png");
+                this.playerCharacter.updateImage("images/steady.png");
             }
             if (e.key == "ArrowLeft") {
                 this.moveLeft = false;
-                this.playerCharacter.updateImage("images/steadyCropped.png");
+                this.playerCharacter.updateImage("images/steady.png");
             }
             if (e.key == " ") {
-                this.playerCharacter.updateImage("images/steadyCropped.png");
+                this.playerCharacter.updateImage("images/steady.png");
             }
         });
     }
