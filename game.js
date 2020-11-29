@@ -43,6 +43,10 @@ class SuperPang {
         // Add event listeners to window
         this.createEventListeners();
 
+        // Variables for controlling FPS
+        this.fpsInterval = 1000 / 30;
+        this.then = Date.now();
+
         // Main loop
         window.requestAnimationFrame(() => { this.mainGameLoop(); });
     }
@@ -51,43 +55,52 @@ class SuperPang {
      * Animates everything and unfolds the game
      */
     mainGameLoop() {
-        // Move character if needed
-        if (this.moveLeft) {
-            this.playerCharacter.moveLeft(2);
-        }
-        if (this.moveRight) {
-            this.playerCharacter.moveRight(2);
-        }
+        // Variables for controlling FPS
+        let now = Date.now();
+        let elapsed = now - this.then;
+        // If enough time has pased, draw the next frame
+        if (elapsed > this.fpsInterval) {
+            this.then = now - (elapsed % this.fpsInterval);
 
-        // Propagate shots if there are any
-        for (let i = 0; i < this.shots.length; i++) {
-            let deleteShot = this.shots[i].propagateOrRemove();
-            if (deleteShot) {
-                this.shots.splice(i, 1);
+
+            // Move character if needed
+            if (this.moveLeft) {
+                this.playerCharacter.moveLeft(4);
             }
-        }
+            if (this.moveRight) {
+                this.playerCharacter.moveRight(4);
+            }
 
-        // Move all balls
-        for (const ball of this.balls) {
-            ball.move();
-        }
+            // Propagate shots if there are any
+            for (let i = 0; i < this.shots.length; i++) {
+                let deleteShot = this.shots[i].propagateOrRemove();
+                if (deleteShot) {
+                    this.shots.splice(i, 1);
+                }
+            }
 
-        // Check if any ball colides with any shot
-        for (let i = 0; i < this.shots.length; i++) {
-            let ballToDelete = this.shots[i].colidesWithAnyBall(this.balls);
-            // If any ball collides break it and delete the shot
-            if (ballToDelete >= 0) {
-                this.shots.splice(i, 1);
-                let newBalls = this.balls[ballToDelete].breakBall(this.nextID);
-                this.balls.splice(ballToDelete, 1);
-                // If the breaked ball has created two new balls add them to the array
-                if (newBalls) {
-                    this.nextID += 2;
-                    this.balls.push(...newBalls);
+            // Move all balls
+            for (const ball of this.balls) {
+                ball.move();
+            }
+
+            // Check if any ball colides with any shot
+            for (let i = 0; i < this.shots.length; i++) {
+                let ballToDelete = this.shots[i].colidesWithAnyBall(this.balls);
+                // If any ball collides break it and delete the shot
+                if (ballToDelete >= 0) {
+                    this.shots.splice(i, 1);
+                    let newBalls = this.balls[ballToDelete].breakBall(this.nextID);
+                    this.balls.splice(ballToDelete, 1);
+                    // If the breaked ball has created two new balls add them to the array
+                    if (newBalls) {
+                        this.nextID += 2;
+                        this.balls.push(...newBalls);
+                    }
                 }
             }
         }
-
+        
         window.requestAnimationFrame(() => { this.mainGameLoop(); });
     }
 
@@ -132,7 +145,7 @@ class SuperPang {
     createBalls(quantity) {
         let balls = [];
         for (let i = 0; i < quantity; i++) {
-            balls.push(new BallController([numAleatorio(100, 400), numAleatorio(100, 300)], [numAleatorioPositivoONegativo(2), -numAleatorio(1, 2.5)], numAleatorioEntero(1, 4), this.nextID++, "red", this.svg));
+            balls.push(new BallController([numAleatorio(100, 400), numAleatorio(100, 300)], [numAleatorioPositivoONegativo(5), -numAleatorio(1, 2.5)], numAleatorioEntero(1, 4), this.nextID++, "red", this.svg));
         }
         return balls;
     }

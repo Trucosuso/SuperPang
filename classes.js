@@ -221,7 +221,7 @@ class BallSuperPang extends Particle {
      * @override
      */
     gravity() {
-        let g = 9.8 * 0.005;
+        let g = 9.8 * 0.008;
         this.previousVelocity[1] = this.velocity[1];
         this.velocity[1] += g;
     }
@@ -290,6 +290,36 @@ class PlayerCharacter {
                 this.position[0] = 0;
             }
         }
+    }
+
+    /**
+     * Checks if the player character collides with a ball. If it does returns true. False if it does not.
+     * @param {BallSuperPang} ball Ball to check collision with
+     * @returns {Boolean} True if it has collided. False if it does not.
+     */
+    colidesWithBall(ball) {
+        // Nearest rectangle point to ball
+        let point = ball.position.slice();
+
+        // Check for closest edge. First X axis the. Y axis.
+        if (ball.position[0] < this.position[0]) {
+            point[0] = this.position[0];
+        } else if (ball.position[0] > this.position[0] + this.width) {
+            point[0] = this.position[0] + this.width;
+        }
+        if (ball.position[1] < this.position[1]) {
+            point[1] = this.position[1];
+        } else if (ball.position[1] > this.position[1] + this.height) {
+            point[1] = this.position[1] + this.height;
+        }
+
+        // Calculate from the center of the ball to the nearest rectangle point
+        let distance = Math.sqrt(Math.pow(ball.position[0] - point[0], 2) + Math.pow(ball.position[1] - point[1], 2));
+
+        if (distance <= ball.radius) {
+            return true;
+        }
+        return false;
     }
 }
 
