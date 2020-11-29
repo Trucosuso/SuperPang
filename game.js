@@ -48,7 +48,7 @@ class SuperPang {
         this.then = Date.now();
 
         // Main loop
-        window.requestAnimationFrame(() => { this.mainGameLoop(); });
+        this.animationIdentification = window.requestAnimationFrame(() => { this.mainGameLoop(); });
     }
 
     /**
@@ -100,8 +100,12 @@ class SuperPang {
                 }
             }
         }
-        
-        window.requestAnimationFrame(() => { this.mainGameLoop(); });
+
+        // Check if the player character is hit by a ball and if it is hit stop the animation
+        let playerHit = this.playerCharacter.colidesWithAnyBall(this.balls);
+        if (!playerHit) {
+            this.animationIdentification = window.requestAnimationFrame(() => { this.mainGameLoop(); });
+        }
     }
 
     /**

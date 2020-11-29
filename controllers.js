@@ -134,6 +134,24 @@ class PlayerCharacterController {
     updateImage(imageLocation) {
         this.view.updateImage(imageLocation);
     }
+
+    /**
+     * Checks if the player character collides any ball in the array. 
+     * @param {Array<BallController>} balls Array of balls to check collision with
+     * @returns {Boolean} True if the player character collides with a ball. False if it does not.
+     */
+    colidesWithAnyBall(balls) {
+        /** @type {Array<BallSuperPang>} */
+        let ballsModel = pluck(balls, "model");
+        let collides = false;
+        ballsModel.forEach( ball => {
+            if (this.model.colidesWithBall(ball)) {
+                collides = true;
+            }
+        });
+
+        return collides;
+    }
 }
 
 /**
