@@ -32,14 +32,14 @@ class Particle {
             this.position[0] += this.velocity[0];
             this.position[1] += this.velocity[1];
         } else {
+            this.position[0] += this.velocity[0];
+            this.position[1] += this.velocity[1];
             if (this.position[0] + this.radius >= containerWidth) {
                 this.position[0] = containerWidth - this.radius - 1;
-                this.velocity[0] = this.previousVelocity[0];
                 this.velocity[0] *= -1;
             }
             if (this.position[0] - this.radius <= 0) {
                 this.position[0] = this.radius + 1;
-                this.velocity[0] = this.previousVelocity[0];
                 this.velocity[0] *= -1;
             }
             if (this.position[1] + this.radius >= containerHeight) {
@@ -56,14 +56,13 @@ class Particle {
     }
 
     /**
-     * HAS TO BE FIXED. NOT WORKING PROPERLY
      * Changes the velocity of the particle according to a vertical uniform gravitational field
      * g = 9.8. As in the surface of the Earth in m²/s²
      */
     gravity() {
         let g = 9.8;
         this.previousVelocity[1] = this.velocity[1];
-        this.velocity[1] -= - 0.5 * g;
+        this.velocity[1] += g;
     }
 
     /**
@@ -222,9 +221,9 @@ class BallSuperPang extends Particle {
      * @override
      */
     gravity() {
-        let g = 9.8;
+        let g = 9.8 * 0.005;
         this.previousVelocity[1] = this.velocity[1];
-        this.velocity[1] += g / 32;
+        this.velocity[1] += g;
     }
 
     /**
@@ -235,8 +234,8 @@ class BallSuperPang extends Particle {
      */
     break() {
         if (this.size > 1) {
-            let ball1 = new BallSuperPang([this.position[0] - this.radius, this.position[1] + this.radius], [-this.velocity[0], this.velocity[1]], this.size - 1);
-            let ball2 = new BallSuperPang([this.position[0] + this.radius, this.position[1] + this.radius], [this.velocity[0], this.velocity[1]], this.size - 1);
+            let ball1 = new BallSuperPang([this.position[0] - this.radius, this.position[1] + this.radius], [-Math.abs(this.velocity[0]), -Math.abs(this.velocity[1])], this.size - 1);
+            let ball2 = new BallSuperPang([this.position[0] + this.radius, this.position[1] + this.radius], [Math.abs(this.velocity[0]), -Math.abs(this.velocity[1])], this.size - 1);
             return [ball1, ball2];
         } else {
             return null;
@@ -246,19 +245,19 @@ class BallSuperPang extends Particle {
 
 
 /**
- * Class representing the player character
+ * Class representing a player character
  */
 class PlayerCharacter {
     /**
      * Create a player character for Super Pang
      * @param {Array<Number>} position Character position
-     * @param {String} id ID to assign to the HTML element
+     * @param {String} id ID to identify the player character
      */
     constructor(position, id) {
         this.position = position;
         this.id = id;
-        this.width = 10;
-        this.height = 30;
+        this.width = 103;
+        this.height = 80;
     }
 
     /**
@@ -287,7 +286,7 @@ class PlayerCharacter {
             this.position[0] -= step;
         } else {
             this.position[0] -= step;
-            if (this.position[0] - this.width <= 0) {
+            if (this.position[0] <= 0) {
                 this.position[0] = 0;
             }
         }
@@ -318,27 +317,35 @@ class PlayerCharacterView {
     }
 
     /**
-     * Draws the player character in the container for the first time. Right now is a rectangle
+     * Draws the player character in the container for the first time.
      */
     firstDraw() {
-        this.figure = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        this.figure = document.createElementNS("http://www.w3.org/2000/svg", "image");
         this.figure.setAttribute("x", this.position[0].toString());
         this.figure.setAttribute("y", this.position[1].toString());
         this.figure.setAttribute("width", this.width.toString());
         this.figure.setAttribute("height", this.height.toString());
-        this.figure.setAttribute("fill", this.color);
+        this.figure.setAttribute("href", "images/steadyCropped.png");
         this.figure.id = this.id.toString();
         this.svgContainer.appendChild(this.figure);
     }
 
     /**
-     * Updates the position of the shot in the view
+     * Updates the position of the character in the view
      * @param {Array<Number>} position Position [x, y]
      */
     updatePosition(position) {
         this.position = position;
         this.figure.setAttribute("x", this.position[0].toString());
         this.figure.setAttribute("y", this.position[1].toString());
+    }
+
+    /**
+     * Updates the image of the character
+     * @param {String} imageLocation Image location
+     */
+    updateImage(imageLocation) {
+        this.figure.setAttribute("href", imageLocation);
     }
 
     /**
@@ -352,7 +359,7 @@ class PlayerCharacterView {
 
 /**
  * Class representing a shot. In our coordinate system Y axis increments downwards.
- * So this shot is fired according to that.
+ * So this shot propagates upwards according to that.
  */
 class Shot {
     /**
@@ -431,7 +438,7 @@ class ShotView {
         this.id = id;
         this.width = width;
         this.height = height;
-        this.color = "#000000";
+        this.color = "#0ccce1";
         this.svgContainer = svgContainer;
         this.figure = null;
     }
@@ -453,9 +460,11 @@ class ShotView {
     /**
      * Updates the shot in the view setting its new y and height
      * @param {Array<Number>} position Position [x, y]
+     * @param {Number} height Shot height
      */
-    updateSvg(position) {
+    updateSvg(position, height) {
         this.position = position;
+        this.height = height;
         this.figure.setAttribute("y", this.position[1].toString());
         this.figure.setAttribute("height", this.height.toString());
     }
