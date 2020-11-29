@@ -17,6 +17,12 @@ class SuperPang {
         this.svg.setAttribute("height", Settings.GAME_HEIGHT.toString());
         element.appendChild(this.svg);
 
+        // Add background
+        this.background = document.createElementNS("http://www.w3.org/2000/svg", "image");
+        this.background.setAttribute("width", Settings.GAME_WIDTH.toString());
+        this.background.setAttribute("href", Settings.BACKGROUND);
+        this.svg.appendChild(this.background);
+
         // Create Frame in SVG
         this.frame = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         this.frame.setAttribute("width", Settings.GAME_WIDTH.toString());

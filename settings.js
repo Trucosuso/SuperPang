@@ -4,6 +4,8 @@ class Settings {
     static GAME_WIDTH = 1000;
     /** @type {Number} Game height in pixels */
     static GAME_HEIGHT = 600;
+    /** @type {String} Background image location */
+    static BACKGROUND = "images/background.png"
 
     // Character settings
     /** @type {Number} Player character width */
@@ -27,8 +29,7 @@ class Settings {
     /** @type {Number} Shot width in pixels */
     static SHOT_WIDTH = 3;
     /** @type {String} Shot color */
-    //static SHOT_COLOR = "#0CCCE1";
-    static SHOT_COLOR = "#000000";
+    static SHOT_COLOR = "#0CCCE1";
 }
 
 export { Settings };
