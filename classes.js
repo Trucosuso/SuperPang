@@ -375,6 +375,20 @@ class PlayerCharacterView {
     remove() {
         this.figure.remove();
     }
+
+    /**
+     * Hides the HTML element using visibility: hidden
+     */
+    hideImage() {
+        this.figure.setAttribute("visibility", "hidden");
+    }
+
+    /**
+     * Shows the HTML element using visibility: visible
+     */
+    showImage() {
+        this.figure.setAttribute("visibility", "visible");
+    }
 }
 
 

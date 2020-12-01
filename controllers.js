@@ -155,6 +155,18 @@ class PlayerCharacterController {
 
         return collides;
     }
+
+    /**
+     * Hides the HTML element of the view if hide is true. "Unhides" it if it is false.
+     * @param {Boolean} hide True if you want to hide the image. False if you want to show it
+     */
+    hideOrShow(hide = false){
+        if (hide) {
+            this.view.hideImage();
+        } else {
+            this.view.showImage();
+        }
+    }
 }
 
 /**
