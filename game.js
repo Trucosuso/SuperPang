@@ -41,10 +41,10 @@ class SuperPigeon {
 
         /** @type {PlayerCharacterController} Store the player */
         this.playerCharacter = null;
-        
+
         /** @type {Array<BallController>} Balls in the game */
         this.balls = [];
-        
+
         /** @type {Array<ShotController>} Shots in game */
         this.shots = [];
 
@@ -104,11 +104,11 @@ class SuperPigeon {
         newGameButton.setAttribute("width", "380");
         newGameButton.setAttribute("href", "images/newGameButton.png");
         newGameButton.setAttribute("transform", "rotate(1.5, 420, 400)");
-        newGameButton.style.cursor = "pointer"; 
+        newGameButton.style.cursor = "pointer";
         this.svg.appendChild(newGameButton);
 
         // Start game when clicking on new game button
-        newGameButton.addEventListener("click", () => { 
+        newGameButton.addEventListener("click", () => {
             while (this.svg.firstChild) {
                 this.svg.removeChild(this.svg.lastChild);
             }
@@ -174,7 +174,7 @@ class SuperPigeon {
         this.playerLivesView.setAttribute("y", "25");
         for (let i = 0; i < this.playerLives; i++) {
             let life = document.createElementNS("http://www.w3.org/2000/svg", "image");
-            life.setAttribute("x", (i*30).toString());
+            life.setAttribute("x", (i * 30).toString());
             life.setAttribute("height", "40");
             life.setAttribute("href", "images/life.png");
             this.playerLivesView.appendChild(life);
@@ -283,8 +283,8 @@ class SuperPigeon {
         let endScreenImageWidth = 600;
         let endScreenImageHeight = 460;
         let endScreenImage = document.createElementNS("http://www.w3.org/2000/svg", "image");
-        endScreenImage.setAttribute("x", (Settings.GAME_WIDTH/2 - endScreenImageWidth/2).toString());
-        endScreenImage.setAttribute("y", (Settings.GAME_HEIGHT/2 - endScreenImageHeight/2).toString());
+        endScreenImage.setAttribute("x", (Settings.GAME_WIDTH / 2 - endScreenImageWidth / 2).toString());
+        endScreenImage.setAttribute("y", (Settings.GAME_HEIGHT / 2 - endScreenImageHeight / 2).toString());
         endScreenImage.setAttribute("width", endScreenImageWidth.toString());
         endScreenImage.setAttribute("href", "images/victory.png");
         this.svg.appendChild(endScreenImage);
@@ -309,8 +309,8 @@ class SuperPigeon {
         let endScreenImageWidth = 600;
         let endScreenImageHeight = 460;
         let endScreenImage = document.createElementNS("http://www.w3.org/2000/svg", "image");
-        endScreenImage.setAttribute("x", (Settings.GAME_WIDTH/2 - endScreenImageWidth/2).toString());
-        endScreenImage.setAttribute("y", (Settings.GAME_HEIGHT/2 - endScreenImageHeight/2).toString());
+        endScreenImage.setAttribute("x", (Settings.GAME_WIDTH / 2 - endScreenImageWidth / 2).toString());
+        endScreenImage.setAttribute("y", (Settings.GAME_HEIGHT / 2 - endScreenImageHeight / 2).toString());
         endScreenImage.setAttribute("width", endScreenImageWidth.toString());
         endScreenImage.setAttribute("href", "images/defeat.png");
         this.svg.appendChild(endScreenImage);
@@ -329,11 +329,11 @@ class SuperPigeon {
         newGameButton.setAttribute("y", "420");
         newGameButton.setAttribute("width", "230");
         newGameButton.setAttribute("href", "images/newGameButton.png");
-        newGameButton.style.cursor = "pointer"; 
+        newGameButton.style.cursor = "pointer";
         this.svg.appendChild(newGameButton);
 
         // Start game when clicking on new game button
-        newGameButton.addEventListener("click", () => { 
+        newGameButton.addEventListener("click", () => {
             while (this.svg.firstChild) {
                 this.svg.removeChild(this.svg.lastChild);
             }
@@ -349,11 +349,11 @@ class SuperPigeon {
         menuButton.setAttribute("y", "420");
         menuButton.setAttribute("width", "230");
         menuButton.setAttribute("href", "images/mainMenuButton.png");
-        menuButton.style.cursor = "pointer"; 
+        menuButton.style.cursor = "pointer";
         this.svg.appendChild(menuButton);
 
         // Go to main menu when clicking main menu button
-        menuButton.addEventListener("click", () => { 
+        menuButton.addEventListener("click", () => {
             while (this.svg.firstChild) {
                 this.svg.removeChild(this.svg.lastChild);
             }
@@ -421,9 +421,9 @@ class SuperPigeon {
      */
     loadCrimsonFont() {
         let crimsonFont = new FontFace("Crimson", "url(fonts/CrimsonText-Regular.woff2)");
-        crimsonFont.load().then(function(loaded_face) {
+        crimsonFont.load().then(function (loaded_face) {
             document.fonts.add(loaded_face);
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log(error);
         });
     }

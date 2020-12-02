@@ -147,7 +147,7 @@ class PlayerCharacterController {
         /** @type {Array<BallSuperPang>} */
         let ballsModel = pluck(balls, "model");
         let collides = false;
-        ballsModel.forEach( ball => {
+        ballsModel.forEach(ball => {
             if (this.model.colidesWithBall(ball)) {
                 collides = true;
             }
@@ -160,7 +160,7 @@ class PlayerCharacterController {
      * Hides the HTML element of the view if hide is true. "Unhides" it if it is false.
      * @param {Boolean} hide True if you want to hide the image. False if you want to show it
      */
-    hideOrShow(hide = false){
+    hideOrShow(hide = false) {
         if (hide) {
             this.view.hideImage();
         } else {
@@ -214,7 +214,7 @@ class ShotController {
         /** @type {Array<BallSuperPang>} */
         let ballsModel = pluck(balls, "model");
         let indexToReturn = -1;
-        ballsModel.forEach( (ball, index) => {
+        ballsModel.forEach((ball, index) => {
             if (this.model.colidesWithBall(ball)) {
                 indexToReturn = index;
             }
@@ -236,7 +236,7 @@ class ShotController {
  * @param {String} key 
  */
 function pluck(array, key) {
-    return array.map(function(item) { return item[key]; });
-}  
+    return array.map(function (item) { return item[key]; });
+}
 
 export { BallController, PlayerCharacterController, ShotController };
