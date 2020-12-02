@@ -29,7 +29,7 @@ class Settings {
     /** @type {Number} Player moving gravity to apply to balls */
     static GRAVITY = 9.8 * 0.008;
     /** @type {String} Ball color */
-    static BALL_COLOR = "#480381";    
+    static BALL_COLOR = "#480381";
 
     // Shot settings
     /** @type {Number} Max shots allowed */
