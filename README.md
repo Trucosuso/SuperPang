@@ -1,5 +1,5 @@
-# Super Pang
-Super Pang game made in JavaScript.
+# Super Pigeon
+Super Pigeon game made in JavaScript. It is based on Super Pang.
 
 With this proyect I have practiced with JavaScript animations, classes, SVG and MVC.
 I also used this project to learn how to work with Git flow and semantic versioning.

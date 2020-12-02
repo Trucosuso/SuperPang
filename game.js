@@ -5,9 +5,9 @@ import { BallController, PlayerCharacterController, ShotController } from "./con
 /**
  * Class responsible of managing the whole game
  */
-class SuperPang {
+class SuperPigeon {
     /**
-     * Create a SuperPang Game
+     * Create a SuperPigeon Game
      * @param {HTMLElement} element HTML element to draw on
      */
     constructor(element) {
@@ -460,4 +460,4 @@ function randomInteger(min, max) {
 }
 
 
-export { SuperPang };
+export { SuperPigeon };
