@@ -27,6 +27,9 @@ class SuperPigeon {
         /** @type {Boolean} Move right activated */
         this.moveRight = false;
 
+        /** @type {Number} Store the x position of the mouse */
+        this.mousePositionX = null;
+
         // Variables for controlling FPS
         this.fpsInterval = 1000 / Settings.MAX_FPS;
         this.then = Date.now();
@@ -60,7 +63,8 @@ class SuperPigeon {
      */
     startMainGame() {
         // Add control event listeners to window
-        this.createControlEventListeners();
+        this.createKeyboardControlEventListeners();
+        this.createMouseControlEventListeners();
 
         // Paint game screen
         this.paintMainGame();
@@ -199,6 +203,13 @@ class SuperPigeon {
             }
             if (this.moveRight) {
                 this.playerCharacter.moveRight(Settings.PLAYER_STEP);
+            }
+            if (this.mousePositionX) {
+                let hasMoved = this.playerCharacter.moveTo(this.mousePositionX - Settings.PLAYER_WIDTH / 2, Settings.PLAYER_STEP);
+                // If the character has not moved change its image to the steady one
+                if (!hasMoved) {
+                    this.playerCharacter.updateImage("images/steady.png");
+                }
             }
 
             // Propagate shots if there are any
@@ -362,9 +373,9 @@ class SuperPigeon {
     }
 
     /**
-     * Adds control event listeners to window
+     * Adds keyboard control event listeners to window
      */
-    createControlEventListeners() {
+    createKeyboardControlEventListeners() {
         window.addEventListener("keydown", (e) => {
             if (e.key == "ArrowRight") {
                 // Start moving right
@@ -399,6 +410,25 @@ class SuperPigeon {
             if (e.key == " ") {
                 // Update player character to steady image
                 this.playerCharacter.updateImage("images/steady.png");
+            }
+        });
+    }
+
+    /**
+     * Adds mouse control event listeners to window
+     */
+    createMouseControlEventListeners() {
+        this.svg.addEventListener("mousemove", (e) => {
+            this.mousePositionX = e.offsetX;
+        });
+        this.svg.addEventListener("mousedown", (e) => {
+            if (e.button == 0 && this.shots.length < Settings.MAX_SHOTS) {
+                // Add new shot
+                this.shots.push(new ShotController([this.playerCharacter.position[0] + this.playerCharacter.width / 2, this.playerCharacter.position[1] + this.playerCharacter.height], Settings.SHOT_SPEED, Settings.SHOT_WIDTH, this.nextID++, Settings.SHOT_COLOR, this.svg));
+                // Update player character to shooting image
+                this.playerCharacter.updateImage("images/shooting.png");
+                // Stop propagating the event
+                e.stopPropagation();
             }
         });
     }

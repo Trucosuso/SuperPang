@@ -167,6 +167,22 @@ class PlayerCharacterController {
             this.view.showImage();
         }
     }
+
+    /**
+     * Moves the player a step towards the indicated position within 5 units. Returns true if the player has moved. Flase if it has not
+     * @param {Number} positionX Where to move the player in X axis within 5 units
+     * @param {Number} step How much to move the player
+     */
+    moveTo(positionX, step = 1) {
+        if (this.position[0] < positionX - 5) {
+            this.moveRight(step);
+            return true;
+        } else if (this.position[0] > positionX + 5) {
+            this.moveLeft(step);
+            return true;
+        }
+        return false;
+    }
 }
 
 /**
