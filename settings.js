@@ -21,7 +21,7 @@ class Settings {
     /** @type {Number} Player character height */
     static PLAYER_HEIGHT = 85;
     /** @type {Number} Player moving speed */
-    static PLAYER_STEP = 4;
+    static PLAYER_STEP = 5;
 
     // Ball settings
     /** @type {Number} Initial quantity of balls */
