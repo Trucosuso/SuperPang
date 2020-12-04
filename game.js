@@ -30,6 +30,10 @@ class SuperPigeon {
         /** @type {Number} Store the x position of the mouse */
         this.mousePositionX = null;
 
+        // Variables for controlling if the game is played with keyboard or with mouse
+        this.controlledByKeyboard = true;
+        this.controlledByMouse = false;
+
         // Variables for controlling FPS
         this.fpsInterval = 1000 / Settings.MAX_FPS;
         this.then = Date.now();
@@ -63,8 +67,13 @@ class SuperPigeon {
      */
     startMainGame() {
         // Add control event listeners to window
-        this.createKeyboardControlEventListeners();
-        this.createMouseControlEventListeners();
+        if (this.controlledByKeyboard) {
+            this.removeMouseControlEventListeners();
+            this.createKeyboardControlEventListeners();
+        } else {
+            this.removeKeyboardControlEventListeners();
+            this.createMouseControlEventListeners();
+        }
 
         // Paint game screen
         this.paintMainGame();
@@ -130,6 +139,8 @@ class SuperPigeon {
         speechBubble.setAttribute("href", "images/speechBubble.png");
         this.svg.appendChild(speechBubble);
 
+        // Choose keyboard controls
+        this.controlledByKeyboard = true;
         // Add text explaining the controls
         let controlsText = document.createElementNS("http://www.w3.org/2000/svg", "text");
         controlsText.setAttribute("x", "335");
@@ -149,6 +160,29 @@ class SuperPigeon {
         creditsText.setAttribute("font-family", "\"Crimson\", Serif");
         creditsText.textContent = "Credits: Programmed by Trucosuso, art by Lagartijosa. ";
         this.svg.appendChild(creditsText);
+
+        // Add button to change the controls
+        let changeControlsButton = document.createElementNS("http://www.w3.org/2000/svg", "image");
+        changeControlsButton.setAttribute("x", "500");
+        changeControlsButton.setAttribute("y", "332");
+        changeControlsButton.setAttribute("height", "65");
+        changeControlsButton.setAttribute("href", "images/changeControls.png");
+        changeControlsButton.setAttribute("transform", "rotate(1.5, 420, 350)");
+        changeControlsButton.style.cursor = "pointer";
+        this.svg.appendChild(changeControlsButton);
+
+        // Change controls when clicking button
+        changeControlsButton.addEventListener("click", () => {
+            if (this.controlledByKeyboard) {
+                this.controlledByKeyboard = false;
+                this.controlledByMouse = true;
+                controlsText.textContent = "Controls: Aim with the mouse to move and left click to shoot.";
+            } else if (this.controlledByMouse) {
+                this.controlledByMouse = false;
+                this.controlledByKeyboard = true;
+                controlsText.textContent = "Controls: Use keyboard arrows to move and space bar to shoot.";
+            }
+        });
     }
 
     /**
@@ -415,7 +449,14 @@ class SuperPigeon {
     }
 
     /**
-     * Adds mouse control event listeners to window
+     * Removes keyboard control event listeners from window
+     */
+    removeKeyboardControlEventListeners() {
+        // TODO
+    }
+
+    /**
+     * Adds mouse control event listeners to svg
      */
     createMouseControlEventListeners() {
         this.svg.addEventListener("mousemove", (e) => {
@@ -431,6 +472,13 @@ class SuperPigeon {
                 e.stopPropagation();
             }
         });
+    }
+
+    /**
+     * Adds mouse control event listeners from svg
+     */
+    removeMouseControlEventListeners() {
+        // TODO
     }
 
     /**
