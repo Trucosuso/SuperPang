@@ -145,7 +145,7 @@ class SuperPigeon {
         let controlsText = document.createElementNS("http://www.w3.org/2000/svg", "text");
         controlsText.setAttribute("x", "335");
         controlsText.setAttribute("y", "300");
-        controlsText.setAttribute("fill", "black");
+        controlsText.setAttribute("fill", "#00215A");
         controlsText.setAttribute("font-size", "23");
         controlsText.setAttribute("font-family", "\"Crimson\", Serif");
         controlsText.textContent = "Controls: Use keyboard arrows to move and space bar to shoot.";
@@ -163,11 +163,11 @@ class SuperPigeon {
 
         // Add button to change the controls
         let changeControlsButton = document.createElementNS("http://www.w3.org/2000/svg", "image");
-        changeControlsButton.setAttribute("x", "500");
-        changeControlsButton.setAttribute("y", "332");
-        changeControlsButton.setAttribute("height", "65");
+        changeControlsButton.setAttribute("x", "535");
+        changeControlsButton.setAttribute("y", "335");
+        changeControlsButton.setAttribute("height", "55");
         changeControlsButton.setAttribute("href", "images/changeControls.png");
-        changeControlsButton.setAttribute("transform", "rotate(1.5, 420, 350)");
+        changeControlsButton.setAttribute("transform", "rotate(-2, 420, 350)");
         changeControlsButton.style.cursor = "pointer";
         this.svg.appendChild(changeControlsButton);
 
