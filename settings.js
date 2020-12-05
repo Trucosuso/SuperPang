@@ -21,7 +21,7 @@ class Settings {
     /** @type {Number} Player character height */
     static PLAYER_HEIGHT = 85;
     /** @type {Number} Player moving speed */
-    static PLAYER_STEP = 4;
+    static PLAYER_STEP = 5;
 
     // Ball settings
     /** @type {Number} Initial quantity of balls */
@@ -39,7 +39,7 @@ class Settings {
     /** @type {Number} Shot width in pixels */
     static SHOT_WIDTH = 3;
     /** @type {String} Shot color */
-    static SHOT_COLOR = "#0CCCE1";
+    static SHOT_COLOR = "#28450C";
 }
 
 export { Settings };
