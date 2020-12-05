@@ -496,10 +496,10 @@ class ShotView {
         this.svgContainer.appendChild(this.rectangle);
 
         this.base = document.createElementNS("http://www.w3.org/2000/svg", "image");
-        this.base.setAttribute("x", (this.position[0] - this.width * 5 / 2 + 1).toString());
+        this.base.setAttribute("x", (this.position[0] - this.width * 6 / 2 + 1).toString());
         this.base.setAttribute("y", this.position[1].toString());
         this.base.setAttribute("preserveAspectRatio", "none");
-        this.base.setAttribute("width", (this.width * 5).toString());
+        this.base.setAttribute("width", (this.width * 6).toString());
         this.base.setAttribute("height", this.height.toString());
         this.base.setAttribute("href", "images/shotBase.png");
         this.svgContainer.appendChild(this.base);
@@ -513,7 +513,7 @@ class ShotView {
     updateSvg(position, height) {
         this.position = position;
         this.height = height;
-        if (this.height < this.width * 5) {
+        if (this.height < this.width * 6) {
             this.base.setAttribute("y", this.position[1].toString());
             this.base.setAttribute("height", this.height.toString());
         }
