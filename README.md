@@ -2,7 +2,7 @@
 Super Pigeon game made in JavaScript. It is based on Super Pang.
 
 With this proyect I have practiced with JavaScript animations, classes, SVG and MVC.
-I also used this project to learn how to work with Git flow and semantic versioning.
+I also used this project to learn how to work with Git flow and semantic versioning (I know this software does not declare an API, but I tried to follow it loosely).
 
 Current version live in https://trucosuso.github.io/SuperPigeon/
 
