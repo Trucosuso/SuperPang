@@ -478,21 +478,31 @@ class ShotView {
         this.height = height;
         this.color = color;
         this.svgContainer = svgContainer;
-        this.figure = null;
+        this.base = null;
+        this.rectangle = null;
     }
 
     /**
      * Draws the shot in the container for the first time.
      */
     firstDraw() {
-        this.figure = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        this.figure.setAttribute("x", this.position[0].toString());
-        this.figure.setAttribute("y", this.position[1].toString());
-        this.figure.setAttribute("width", this.width.toString());
-        this.figure.setAttribute("height", this.height.toString());
-        this.figure.setAttribute("fill", this.color);
-        this.figure.id = this.id.toString();
-        this.svgContainer.appendChild(this.figure);
+        this.rectangle = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        this.rectangle.setAttribute("x", this.position[0].toString());
+        this.rectangle.setAttribute("y", this.position[1].toString());
+        this.rectangle.setAttribute("width", this.width.toString());
+        this.rectangle.setAttribute("height", this.height.toString());
+        this.rectangle.setAttribute("fill", this.color);
+        this.rectangle.id = this.id.toString();
+        this.svgContainer.appendChild(this.rectangle);
+
+        this.base = document.createElementNS("http://www.w3.org/2000/svg", "image");
+        this.base.setAttribute("x", (this.position[0] - this.width * 6 / 2 + 1).toString());
+        this.base.setAttribute("y", this.position[1].toString());
+        this.base.setAttribute("preserveAspectRatio", "none");
+        this.base.setAttribute("width", (this.width * 6).toString());
+        this.base.setAttribute("height", this.height.toString());
+        this.base.setAttribute("href", "images/shotBase.png");
+        this.svgContainer.appendChild(this.base);
     }
 
     /**
@@ -503,15 +513,20 @@ class ShotView {
     updateSvg(position, height) {
         this.position = position;
         this.height = height;
-        this.figure.setAttribute("y", this.position[1].toString());
-        this.figure.setAttribute("height", this.height.toString());
+        if (this.height < this.width * 6) {
+            this.base.setAttribute("y", this.position[1].toString());
+            this.base.setAttribute("height", this.height.toString());
+        }
+        this.rectangle.setAttribute("y", this.position[1].toString());
+        this.rectangle.setAttribute("height", this.height.toString());
     }
 
     /**
      * Removes the HTML element. You should delete this object after doing this. This method does not remove it.
      */
     remove() {
-        this.figure.remove();
+        this.base.remove();
+        this.rectangle.remove();
     }
 }
 
